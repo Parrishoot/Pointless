@@ -38,8 +38,9 @@ public class Target : MonoBehaviour
     private float minRotationSpeed = 500f;
 
     private SpriteRenderer spriteRenderer;
-
     private Rigidbody2D squareRigidbody;
+
+    private bool clicked = false;
 
     public void Start()
     {
@@ -50,9 +51,36 @@ public class Target : MonoBehaviour
         spriteRenderer = squareSpriteObject.GetComponent<SpriteRenderer>();
 
         squareRigidbody = GetComponent<Rigidbody2D>();
-        squareRigidbody.AddForce(new Vector2(Random.Range(minXForce, maxXForce),
-                                             Random.Range(minYForce, maxYForce)),
-                                             ForceMode2D.Impulse);
+
+    }
+
+    public void FixedUpdate()
+    {
+        switch(squareState)
+        {
+            case SQUARE_STATES.SPAWN:
+
+                
+                squareRigidbody.AddForce(new Vector2(Random.Range(minXForce, maxXForce),
+                                         Random.Range(minYForce, maxYForce)),
+                                         ForceMode2D.Impulse);
+
+                squareState = SQUARE_STATES.UNCLICKED;
+
+                break;
+
+            case SQUARE_STATES.UNCLICKED:
+
+                if(clicked)
+                {
+                    clicked = false;
+                    Debug.Log("Force!");
+                    squareRigidbody.velocity = new Vector2(squareRigidbody.velocity.x, 0f);
+                    squareState = SQUARE_STATES.FADE_OUT;
+                }
+
+                break;
+        }
     }
 
     public void Update()
@@ -60,9 +88,6 @@ public class Target : MonoBehaviour
         switch (squareState)
         {
             case SQUARE_STATES.SPAWN:
-
-                squareState = SQUARE_STATES.UNCLICKED;
-
                 break;
 
             case SQUARE_STATES.UNCLICKED:
@@ -72,6 +97,7 @@ public class Target : MonoBehaviour
 
                 if (worldPos.y < 0.0f)
                 {
+                    Debug.Log("Destroying");
                     Destroy(gameObject);
                 }
 
@@ -89,8 +115,8 @@ public class Target : MonoBehaviour
                 spriteRenderer.color = temp;
 
                 // Scale down with fade
-                spriteRenderer.transform.localScale = new Vector3(Mathf.Min(temp.a * 2, 1), 
-                                                                  Mathf.Min(temp.a * 2, 1), 
+                spriteRenderer.transform.localScale = new Vector3(Mathf.Min(temp.a * 1.5f, 1), 
+                                                                  Mathf.Min(temp.a * 1.5f, 1), 
                                                                   1);
 
                 // Once the object is no longer visible, move to final state
@@ -101,13 +127,17 @@ public class Target : MonoBehaviour
 
                 break;
 
+            case SQUARE_STATES.CLICKED:
+
+                Destroy(gameObject);
+                break;
+
         }
     }
 
     public void OnMouseDown()
     {
-        squareRigidbody.AddForce(new Vector2(0f, -400f), ForceMode2D.Impulse);
-        squareState = SQUARE_STATES.FADE_OUT;
+        clicked = true;
     }
 
     public bool IsClicked()

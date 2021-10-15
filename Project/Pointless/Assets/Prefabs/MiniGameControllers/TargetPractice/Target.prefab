@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squareSpriteObject: {fileID: 7597861064262944556}
-  fadeSpeed: 30
+  fadeSpeed: 40
   minXForce: -100
   maxXForce: 100
   minYForce: 400
