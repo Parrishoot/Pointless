@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6065371760053441947}
-  - component: {fileID: 4376552230725732126}
   - component: {fileID: -7143506824165500198}
-  m_Layer: 0
-  m_Name: DebugSquare
+  - component: {fileID: 4516939554874863632}
+  - component: {fileID: 5322228567996161572}
+  m_Layer: 6
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,20 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4376552230725732126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2388643670916831451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45c4954e4be7d3146a371506895ef772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  squareSpriteObject: {fileID: 7597861064262944556}
-  squareState: 0
 --- !u!61 &-7143506824165500198
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -73,6 +60,46 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 32, y: 32}
   m_EdgeRadius: 0
+--- !u!50 &4516939554874863632
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388643670916831451}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 70
+  m_Material: {fileID: 0}
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!114 &5322228567996161572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388643670916831451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bd99880f239b94987b536c4a9f8834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareSpriteObject: {fileID: 7597861064262944556}
+  fadeSpeed: 30
+  minXForce: -100
+  maxXForce: 100
+  minYForce: 400
+  maxYForce: 600
+  squareState: 0
 --- !u!1 &7597861064262944556
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265955588369257757}
   - component: {fileID: 1257867109523497245}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SquareSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

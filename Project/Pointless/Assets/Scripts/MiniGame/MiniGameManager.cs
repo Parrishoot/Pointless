@@ -16,7 +16,6 @@ public class MiniGameManager : MonoBehaviour
     public Transform screenSpawn;
     public Transform miniGameControllerSpawn;
 
-    private ScreenController screenController = null;
     private MiniGameController miniGameController;
 
     private enum MINI_GAME_STATES {
@@ -41,7 +40,6 @@ public class MiniGameManager : MonoBehaviour
             case MINI_GAME_STATES.SETUP:
                 
                 // Spawn the screen object and move the camera
-                SpawnScreen();
                 cameraController.SwapStates();
                 miniGameState = MINI_GAME_STATES.STARTING;
 
@@ -49,13 +47,7 @@ public class MiniGameManager : MonoBehaviour
 
             case MINI_GAME_STATES.STARTING:
 
-                // Once the screen is fully spawned
-                if(screenController.IsIdle())
-                {
-                    // Begin the current mini game
-                    miniGameState = MINI_GAME_STATES.IN_PROGRESS;
-                    miniGameController.BeginGame();
-                }
+                miniGameState = MINI_GAME_STATES.IN_PROGRESS;
 
                 break;
 
@@ -70,10 +62,6 @@ public class MiniGameManager : MonoBehaviour
 
             case MINI_GAME_STATES.FINISHING:
 
-                // Despawn the scren
-                screenController.FadeOut();
-                screenController = null;
-
                 // Move the camera back
                 cameraController.SwapStates();
 
@@ -83,13 +71,6 @@ public class MiniGameManager : MonoBehaviour
                 break;
 
         }
-    }
-
-    // Spawn the screen object 
-    private void SpawnScreen()
-    {
-        GameObject screen = Instantiate(screenObject, screenSpawn.position, screenSpawn.rotation);
-        screenController = screen.GetComponent<ScreenController>();
     }
 
     public void BeginGame(GameObject gameControllerObject)

@@ -10,15 +10,35 @@ public class DebugSquare : MonoBehaviour
      * minigame controller implementation
      * 
      */
+
     public GameObject squareSpriteObject;
-        
+
     public enum SQUARE_STATES
     {
+        SPAWN,
         UNCLICKED,
         CLICKED
     }
 
-    public SQUARE_STATES squareState = SQUARE_STATES.UNCLICKED;
+    public SQUARE_STATES squareState = SQUARE_STATES.SPAWN;
+
+    public void Start()
+    {
+
+    }
+
+    public void Update()
+    {
+        switch(squareState)
+        {
+            case SQUARE_STATES.SPAWN:
+
+                squareState = SQUARE_STATES.UNCLICKED;
+
+                break;
+
+        }
+    }
 
     public void OnMouseDown()
     {

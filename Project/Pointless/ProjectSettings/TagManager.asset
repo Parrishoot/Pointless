@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Target
   - 
   - 
   - 
@@ -41,6 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Screen
+    uniqueID: 791083775
+    locked: 0
   - name: MiniGameObject
     uniqueID: 1350218985
+    locked: 0
+  - name: ScreenBorders
+    uniqueID: 794453697
+    locked: 0
+  - name: RoomBackground
+    uniqueID: 4198725659
+    locked: 0
+  - name: Player
+    uniqueID: 4019893711
+    locked: 0
+  - name: RoomBorders
+    uniqueID: 2420741479
     locked: 0

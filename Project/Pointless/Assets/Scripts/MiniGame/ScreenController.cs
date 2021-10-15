@@ -7,17 +7,18 @@ public class ScreenController : MonoBehaviour
 
     public float changeSpeed = 5f;
     public InputManager inputManager;
+    public SpriteRenderer screenSpriteRenderer;
 
     private float targetAlpha = 0f;
     private float alphaMod = 1f;
-    private SpriteRenderer spriteRenderer;
+    
 
     private enum SCREEN_STATES
     {
         SPAWN,
         IDLE,
         FADE_OUT,
-        DESPAWN
+        FINISHED
     }
 
     private SCREEN_STATES screenState = SCREEN_STATES.SPAWN;
@@ -25,11 +26,9 @@ public class ScreenController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        Color temp = spriteRenderer.color;
+        Color temp = screenSpriteRenderer.color;
         temp.a = targetAlpha;
-        spriteRenderer.color = temp;
+        screenSpriteRenderer.color = temp;
     }
 
     // Update is called once per frame
@@ -37,7 +36,7 @@ public class ScreenController : MonoBehaviour
     {
 
         bool interact = inputManager.InteractPressed();
-        Color temp = spriteRenderer.color;
+        Color temp = screenSpriteRenderer.color;
 
         switch (screenState)
         {
@@ -66,14 +65,13 @@ public class ScreenController : MonoBehaviour
 
                 if (temp.a == 0f)
                 {
-                    screenState = SCREEN_STATES.DESPAWN;
+                    screenState = SCREEN_STATES.FINISHED;
                 }
 
                 break;
 
-            // Once the opacity hits 0, despawn
-            case SCREEN_STATES.DESPAWN:
-                Destroy(gameObject);
+            // Once the opacity hits 0, mark the screen as ready to be despawned
+            case SCREEN_STATES.FINISHED:
                 break;
         }
 
@@ -82,7 +80,7 @@ public class ScreenController : MonoBehaviour
         {
             temp.a += (changeSpeed * alphaMod * Time.deltaTime);
             temp.a = Mathf.Clamp(temp.a, 0f, 1f);
-            spriteRenderer.color = temp;
+            screenSpriteRenderer.color = temp;
         }
     }
 
@@ -94,5 +92,10 @@ public class ScreenController : MonoBehaviour
     public bool IsIdle()
     {
         return screenState == SCREEN_STATES.IDLE;
+    }
+
+    public bool IsFinished()
+    {
+        return screenState == SCREEN_STATES.FINISHED;
     }
 }

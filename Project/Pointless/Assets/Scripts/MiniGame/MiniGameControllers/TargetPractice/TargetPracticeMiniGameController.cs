@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugMiniGameController : MiniGameController
+public class TargetPracticeMiniGameController : MiniGameController
 {
     /*
      * 
-     * Example implementation for a simple game
-     * (FOR TESTING)
+     * An aiming minigaming where you have to shoot down targets
      * 
      */
 
 
     public GameObject clickableSquareObject;
-    public Transform squareSpawn;
-
-    private DebugSquare debugSquare;
-    private GameObject debugSquareGameObject;
+    public Spawner goodTargetSpawner;
+    public Spawner badTargetSpawner;
 
     // Update is called once per frame
     public override void Update()
@@ -28,34 +25,33 @@ public class DebugMiniGameController : MiniGameController
         {
 
             case MINI_GAME_CONTROLLER_STATES.STARTING:
-                
+
                 // Once the game has started, set the game to in progress
                 miniGameControllerState = MINI_GAME_CONTROLLER_STATES.IN_PROGRESS;
 
                 // Spawn the clickable square object in the spawn location defined in the controller prefab
-                debugSquareGameObject = Instantiate(clickableSquareObject,
-                                                    squareSpawn.position,
-                                                    squareSpawn.rotation);
-                debugSquare = debugSquareGameObject.GetComponent<DebugSquare>();
+                goodTargetSpawner.BeginSpawn();
+                badTargetSpawner.BeginSpawn();
 
                 break;
 
             case MINI_GAME_CONTROLLER_STATES.IN_PROGRESS:
-                
+
                 // Once the square is clicked, the game is "won" and we can end
-                if(debugSquare.IsClicked())
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
+                    goodTargetSpawner.EndSpawn();
+                    badTargetSpawner.EndSpawn();
                     miniGameControllerState = MINI_GAME_CONTROLLER_STATES.TEARDOWN;
                 }
-                
+
                 break;
 
             case MINI_GAME_CONTROLLER_STATES.FINISHED:
-                
+
                 // When the game is over, destroy the objects
-                Destroy(debugSquareGameObject);
                 Destroy(gameObject);
-                
+
                 break;
 
         }

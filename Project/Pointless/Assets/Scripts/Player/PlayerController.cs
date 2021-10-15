@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    public float jumpForce = 5000f;
-    public float moveSpeed = 30f;
+    public float jumpForce = 550f;
+    public float moveSpeed = 200f;
 
     public InputManager inputManager;
     public MiniGameManager miniGameManager;
